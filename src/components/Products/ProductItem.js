@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import { ProductsContext } from "../../context/products-context";
+import React from "react";
+import { useStore } from "../../hooks-store/store";
 
 import Card from "../UI/Card";
 import "./ProductItem.css";
-
-const ProductItem = (props) => {
-  const toggleFav = useContext(ProductsContext).toggleFav;
+// React.memo + passing false to useStore, that does not push this action to actions
+const ProductItem = React.memo((props) => {
+  console.log("Rendering");
+  const dispatch = useStore(false)[1];
 
   const toggleFavHandler = () => {
-    toggleFav(props.id);
+    dispatch("TOGGLE_FAV", props.id);
   };
 
   return (
@@ -25,6 +26,6 @@ const ProductItem = (props) => {
       </div>
     </Card>
   );
-};
+});
 
 export default ProductItem;
